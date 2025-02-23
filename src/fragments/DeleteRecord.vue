@@ -33,9 +33,18 @@ function handleDelete() {
     delete data.items[currM];
 
     Database.put(database, Const.DB_RECORD, Utils.Objects.raw(data), currY)
-      .then(() => Database.put(database, Const.DB_CONFIG, {
-        id: Const.DB_KEY_CONFIG, Y: currY, M: nextM
-      }, Const.DB_KEY_CONFIG))
+      .then(() =>
+        Database.put(
+          database,
+          Const.DB_CONFIG,
+          {
+            id: Const.DB_KEY_CONFIG,
+            Y: currY,
+            M: nextM
+          },
+          Const.DB_KEY_CONFIG
+        )
+      )
       .then(() => emits("onDeleted", nextM))
       .catch(error => {
         ElMessage.error("删除记录时发生错误");
@@ -61,6 +70,4 @@ function handleDelete() {
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

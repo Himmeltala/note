@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { disabledDate } from "@/utils/forms";
 import { ChatDotRound, Coin } from "@element-plus/icons-vue";
 import type { FormInstance, FormRules } from "element-plus";
 import { PropType } from "vue";
-import { disabledDate } from "@/utils/forms";
 
 const props = defineProps({
   database: {
@@ -38,9 +38,7 @@ const formRule = ref<FormRules>({
     { required: true, message: "请输入收支备注", trigger: "blur" },
     { min: 1, max: 50, message: "长度在1~50个字符之间", trigger: "blur" }
   ],
-  datetime: [
-    { required: true, message: "请输入日期时间", trigger: "change" }
-  ]
+  datetime: [{ required: true, message: "请输入日期时间", trigger: "change" }]
 });
 const formData = ref<IBalance>({
   ...props.value
@@ -114,11 +112,10 @@ function confirmSubmit() {
         <el-form-item label="日期" prop="datetime">
           <el-date-picker
             v-model="formData.datetime"
-            :disabled-date="(time:Date) => disabledDate(time, currY, currM)"
+            :disabled-date="(time: Date) => disabledDate(time, currY, currM)"
             placeholder="请输入日期"
             style="width: 100%"
-            type="date"
-          />
+            type="date" />
         </el-form-item>
         <el-form-item class="mt-10">
           <div class="f-c-c w-100%">

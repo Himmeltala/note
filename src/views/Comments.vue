@@ -3,9 +3,7 @@ import { ChatDotRound, Coin } from "@element-plus/icons-vue";
 import type { FormInstance, FormRules } from "element-plus";
 
 const database = await Database.create();
-const data = ref(
-  await Database.get<{ items: IComment[] }>(database, Const.DB_COMMENTS, Const.DB_KEY_COMMENTS)
-);
+const data = ref(await Database.get<{ items: IComment[] }>(database, Const.DB_COMMENTS, Const.DB_KEY_COMMENTS));
 const config = ref(await Database.get<IConfig>(database, Const.DB_CONFIG, Const.DB_KEY_CONFIG));
 const editCommentsRow = ref<IComment>();
 const delCommentsDialog = ref(false);
@@ -37,12 +35,7 @@ function addComments() {
           cost: formData.value.cost,
           type: formData.value.type
         });
-        Database.put(
-          database,
-          Const.DB_COMMENTS,
-          Utils.Objects.raw(data.value),
-          Const.DB_KEY_COMMENTS
-        );
+        Database.put(database, Const.DB_COMMENTS, Utils.Objects.raw(data.value), Const.DB_KEY_COMMENTS);
         commentsEditDialog.value = !commentsEditDialog.value;
       } else {
         ElMessage.error("重复添加！");
@@ -55,9 +48,7 @@ function addComments() {
 }
 
 function updateComments() {
-  const foundIndex = data.value.items?.findIndex(
-    item => item.value === editCommentsRow.value.value
-  );
+  const foundIndex = data.value.items?.findIndex(item => item.value === editCommentsRow.value.value);
   if (foundIndex >= 0) {
     Utils.Forms.formValidator(
       formInst.value,
@@ -67,12 +58,7 @@ function updateComments() {
           cost: formData.value.cost,
           type: formData.value.type
         };
-        Database.put(
-          database,
-          Const.DB_COMMENTS,
-          Utils.Objects.raw(data.value),
-          Const.DB_KEY_COMMENTS
-        );
+        Database.put(database, Const.DB_COMMENTS, Utils.Objects.raw(data.value), Const.DB_KEY_COMMENTS);
         commentsEditDialog.value = !commentsEditDialog.value;
         formData.value.value = "";
         formData.value.cost = 100;
@@ -88,9 +74,7 @@ function updateComments() {
 }
 
 function confirmDelComments() {
-  const foundIndex = data.value.items?.findIndex(
-    item => item.value === editCommentsRow.value.value
-  );
+  const foundIndex = data.value.items?.findIndex(item => item.value === editCommentsRow.value.value);
   if (foundIndex >= 0) {
     data.value.items.splice(foundIndex, 1);
     Database.put(database, Const.DB_COMMENTS, Utils.Objects.raw(data.value), Const.DB_KEY_COMMENTS);
@@ -137,7 +121,9 @@ const budgetRemaining = computed(() => {
       <div>快捷备注</div>
       <div class="text-0.8rem text-text-secondary">快捷备注便于快速填写计划项。</div>
       <div class="mt-2 text-0.9rem text-text-secondary">
-        总预算：<span class="text-green">{{ config.budget.toFixed(2) }}</span>，已计划：<span class="text-text-primary">{{ totalBudget.toFixed(2) }}</span>，剩余：<span class="text-red">{{ budgetRemaining.toFixed(2) }}</span>
+        总预算：<span class="text-green">{{ config.budget.toFixed(2) }}</span
+        >，已计划：<span class="text-text-primary">{{ totalBudget.toFixed(2) }}</span
+        >，剩余：<span class="text-red">{{ budgetRemaining.toFixed(2) }}</span>
       </div>
     </div>
     <div class="mb-4 f-c-e">
@@ -154,20 +140,12 @@ const budgetRemaining = computed(() => {
         <el-table-column fixed="right" label="操作" width="90">
           <template #default="scope">
             <div class="f-c-b">
-              <el-button
-                link
-                size="small"
-                type="danger"
-                @click.prevent="beforeCloseComments(scope.row)">
+              <el-button link size="small" type="danger" @click.prevent="beforeCloseComments(scope.row)">
                 <template #icon>
                   <div class="i-tabler-trash"></div>
                 </template>
               </el-button>
-              <el-button
-                link
-                size="small"
-                type="success"
-                @click.prevent="beforeUpdateComments(scope.row)">
+              <el-button link size="small" type="success" @click.prevent="beforeUpdateComments(scope.row)">
                 <template #icon>
                   <div class="i-tabler-edit"></div>
                 </template>
@@ -196,10 +174,7 @@ const budgetRemaining = computed(() => {
         </div>
       </template>
     </el-dialog>
-    <el-dialog
-      v-model="commentsEditDialog"
-      :title="commentsEditType == '新增' ? '新建备注' : '修改备注'"
-      width="90%">
+    <el-dialog v-model="commentsEditDialog" :title="commentsEditType == '新增' ? '新建备注' : '修改备注'" width="90%">
       <el-form
         ref="formInst"
         :model="formData"
@@ -221,11 +196,7 @@ const budgetRemaining = computed(() => {
               <div class="i-tabler-x"></div>
             </template>
           </el-button>
-          <el-button
-            plain
-            round
-            type="primary"
-            @click="commentsEditType == '新增' ? addComments() : updateComments()">
+          <el-button plain round type="primary" @click="commentsEditType == '新增' ? addComments() : updateComments()">
             <template #icon>
               <div class="i-tabler-check"></div>
             </template>

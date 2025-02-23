@@ -9,11 +9,18 @@ async function exportJson() {
   const comments = await Database.get(database, Const.DB_COMMENTS, Const.DB_KEY_COMMENTS);
   const config = await Database.get(database, Const.DB_CONFIG, Const.DB_KEY_CONFIG);
 
-  const blob = new Blob([JSON.stringify([
-    {
-      records, comments, config
-    }
-  ])], { type: "text/json" });
+  const blob = new Blob(
+    [
+      JSON.stringify([
+        {
+          records,
+          comments,
+          config
+        }
+      ])
+    ],
+    { type: "text/json" }
+  );
   const a = document.createElement("a");
   const date = Utils.Dates.formatDate("YY-MM-DD-hh-mm-ss");
   a.download = `${date}.json`;
@@ -49,7 +56,7 @@ async function delDatabase() {
 
 const formData = reactive<IConfig>({ ...config });
 
-watch(formData, (value) => {
+watch(formData, value => {
   Database.put(database, Const.DB_CONFIG, Utils.Objects.raw(value), Const.DB_KEY_CONFIG);
 });
 </script>
@@ -65,8 +72,13 @@ watch(formData, (value) => {
         <div class="f-c-c flex-basis-33.33% max-w-33.33%">
           <el-button plain round type="primary" @click="exportJson">导出数据</el-button>
         </div>
-        <el-upload :auto-upload="false" :limit="1" :on-change="importJson" :show-file-list="false"
-                   accept="application/json" class="f-c-c flex-basis-33.33% max-w-33.33%">
+        <el-upload
+          :auto-upload="false"
+          :limit="1"
+          :on-change="importJson"
+          :show-file-list="false"
+          accept="application/json"
+          class="f-c-c flex-basis-33.33% max-w-33.33%">
           <el-button plain round type="success">导入数据</el-button>
         </el-upload>
         <div class="f-c-c flex-basis-33.33% max-w-33.33%">
@@ -100,6 +112,4 @@ watch(formData, (value) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,4 +1,4 @@
-import * as echarts from "echarts/core";
+import { LineChart, PieChart, RadarChart } from "echarts/charts";
 import {
   DataZoomComponent,
   GridComponent,
@@ -6,7 +6,7 @@ import {
   TitleComponent,
   TooltipComponent
 } from "echarts/components";
-import { LineChart, PieChart, RadarChart } from "echarts/charts";
+import * as echarts from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 
 echarts.use([

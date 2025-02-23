@@ -46,9 +46,7 @@ async function confirmSubmit() {
 
 <template>
   <div>
-    <el-button size="small" text type="danger" @click="isShowDialog = !isShowDialog">
-      删除计划
-    </el-button>
+    <el-button size="small" text type="danger" @click="isShowDialog = !isShowDialog"> 删除计划 </el-button>
     <el-dialog v-model="isShowDialog" append-to-body title="删除计划" width="90%">
       <el-form ref="formInst" hide-required-asterisk label-position="left" label-width="auto" status-icon>
         <el-form-item label="备注" prop="text">
@@ -63,8 +61,7 @@ async function confirmSubmit() {
             disabled
             placeholder="请输入日期"
             style="width: 100%"
-            type="date"
-          />
+            type="date" />
         </el-form-item>
         <el-form-item class="mt-10">
           <div class="f-c-c w-100%">

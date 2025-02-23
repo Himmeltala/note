@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { PropType } from "vue";
 import { Coin } from "@element-plus/icons-vue";
 import type { FormInstance, FormRules } from "element-plus";
+import { PropType } from "vue";
 
 const props = defineProps({
   database: {

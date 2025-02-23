@@ -5,7 +5,7 @@ const database = await Database.create();
 const config = await Database.get<IConfig>(database, Const.DB_CONFIG, Const.DB_KEY_CONFIG);
 const data = ref(await Database.get<IRecord>(database, Const.DB_RECORD, config.Y));
 
-type Grouped = { [text: string]: IBalance[] }
+type Grouped = { [text: string]: IBalance[] };
 
 function groupByType(data: any) {
   const grouped: Grouped = {};
@@ -30,9 +30,12 @@ const calcTotalCost = (obj: Grouped) => {
   function recursiveSum(o: Grouped): number {
     return Object.values(o).reduce((total, value) => {
       if (Array.isArray(value)) {
-        return total + value.reduce((sum: number, item: IBalance) => {
-          return sum + (item.hasOwnProperty("cost") ? Number(item.cost) : 0);
-        }, 0);
+        return (
+          total +
+          value.reduce((sum: number, item: IBalance) => {
+            return sum + (item.hasOwnProperty("cost") ? Number(item.cost) : 0);
+          }, 0)
+        );
       } else if (typeof value === "object" && value !== null) {
         return total + recursiveSum(value);
       }
@@ -75,9 +78,12 @@ const calcTotalSurplus = (items: IRecord["items"]) => {
 const isChart = ref(null);
 
 function formatData(data: any, max = 36) {
-  return Object.entries(data).slice(0, max).map(([key, value]) => ({
-    value: calcCost(value as any), name: key
-  }));
+  return Object.entries(data)
+    .slice(0, max)
+    .map(([key, value]) => ({
+      value: calcCost(value as any),
+      name: key
+    }));
 }
 
 onMounted(() => {
@@ -114,7 +120,6 @@ onMounted(() => {
   if (grouped) {
     createChart(isChart.value, grouped);
   }
-
 });
 </script>
 

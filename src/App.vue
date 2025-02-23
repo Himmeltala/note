@@ -1,5 +1,4 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="px-4 pt-4 bg-bg-page min-h-93vh overflow-auto pb-9vh">
@@ -20,7 +19,7 @@
     </div>
     <div :class="{ 'text-current': $route.name === '备注' }" class="w-4rem" @click="$router.push('/comments')">
       <div class="f-c-c text-1.1rem">
-        <div class=" i-tabler-bookmark"></div>
+        <div class="i-tabler-bookmark"></div>
       </div>
       <div class="text-center text-0.6rem">备注</div>
     </div>
@@ -41,6 +40,6 @@
 
 <style scoped>
 .text-current {
-  color: var(--el-color-primary); /* Replace with your desired color */
+  color: var(--el-color-primary);
 }
 </style>

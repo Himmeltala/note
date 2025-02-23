@@ -23,8 +23,8 @@ function calcGrowthRate() {
 
   if (index !== -1) {
     if (!isFirst) {
-      data.value.items[keys[index - 1]].balance.forEach(item => lCost += Number(item.cost));
-      data.value.items[keys[index]].balance.forEach(item => cCost += Number(item.cost));
+      data.value.items[keys[index - 1]].balance.forEach(item => (lCost += Number(item.cost)));
+      data.value.items[keys[index]].balance.forEach(item => (cCost += Number(item.cost)));
     }
 
     result = lCost !== 0 ? (((cCost - lCost) / lCost) * 100 * 10) / 10 : 0;
@@ -46,7 +46,7 @@ function calcSurplus() {
   if (!data?.value.items[currM.value]) return 0;
 
   const total = calcTotalCost(data.value.items[currM.value].balance);
-  data.value.items[currM.value].surplus = Number((data.value.items[currM.value].budget - total));
+  data.value.items[currM.value].surplus = Number(data.value.items[currM.value].budget - total);
   Database.put(database, Const.DB_RECORD, Utils.Objects.raw(data.value), currY.value).then(() => {
     risingRate.value = calcGrowthRate();
   });
@@ -141,10 +141,20 @@ function groupData(data: IRecord) {
     <div class="mb-4">
       <div class="mb-2">操作</div>
       <div class="f-c-b">
-        <DeleteRecord :curr-m="currM" :curr-y="currY" :data="data" :database="database" :m-list="MList"
-                      @on-deleted="onDeletedR" />
-        <CreateRecord :curr-m="currM" :curr-y="currY" :data="data" :database="database" :m-list="MList"
-                      @on-created="onCreatedR" />
+        <DeleteRecord
+          :curr-m="currM"
+          :curr-y="currY"
+          :data="data"
+          :database="database"
+          :m-list="MList"
+          @on-deleted="onDeletedR" />
+        <CreateRecord
+          :curr-m="currM"
+          :curr-y="currY"
+          :data="data"
+          :database="database"
+          :m-list="MList"
+          @on-created="onCreatedR" />
         <UpdateRecord :curr-m="currM" :curr-y="currY" :data="data" :database="database" />
         <AddItem :curr-m="currM" :curr-y="currY" :data="data" :database="database" />
       </div>
@@ -203,10 +213,21 @@ function groupData(data: IRecord) {
             </div>
             <template #dropdown>
               <div class="m-2">
-                <UpdateItem :curr-m="currM" :curr-y="currY" :data="data" :database="database"
-                            :index="index" :value="value" class="mb-2" />
-                <DeleteItem :curr-m="currM" :curr-y="currY" :data="data" :database="database"
-                            :index="index" :value="value" />
+                <UpdateItem
+                  :curr-m="currM"
+                  :curr-y="currY"
+                  :data="data"
+                  :database="database"
+                  :index="index"
+                  :value="value"
+                  class="mb-2" />
+                <DeleteItem
+                  :curr-m="currM"
+                  :curr-y="currY"
+                  :data="data"
+                  :database="database"
+                  :index="index"
+                  :value="value" />
               </div>
             </template>
           </el-dropdown>
