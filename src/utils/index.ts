@@ -65,5 +65,4 @@ export namespace Utils {
     const randomString = generateRandomString(7);
     return CryptoJS.SHA256(randomString).toString(CryptoJS.enc.Hex);
   }
-
 }

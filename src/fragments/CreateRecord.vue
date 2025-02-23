@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { PropType } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
 import { Coin } from "@element-plus/icons-vue";
+import type { FormInstance, FormRules } from "element-plus";
+import { PropType } from "vue";
 
 const props = defineProps({
   database: {
@@ -46,36 +46,32 @@ function confirmSubmit() {
               id: formData.year,
               items: {
                 [currM]: {
-                  budget: formData.budget, surplus: 0, balance: []
+                  budget: formData.budget,
+                  surplus: 0,
+                  balance: []
                 }
               }
-            }).then(
-              () => {
-                dialog.value = !dialog.value;
-                emits("onCreated", formData.year);
-              }
-            );
+            }).then(() => {
+              dialog.value = !dialog.value;
+              emits("onCreated", formData.year);
+            });
           } else {
             if (!Object.keys(r.items).includes(currM)) {
               r.items[currM] = { surplus: 0, budget: formData.budget, balance: [] };
-              Database.put(props.database, Const.DB_RECORD, Utils.Objects.raw(r), props.currY).then(
-                () => {
-                  dialog.value = !dialog.value;
-                  emits("onCreated", formData.year);
-                }
-              );
+              Database.put(props.database, Const.DB_RECORD, Utils.Objects.raw(r), props.currY).then(() => {
+                dialog.value = !dialog.value;
+                emits("onCreated", formData.year);
+              });
             } else ElMessage.error("已有该记录");
           }
         });
       } else {
         if (!props.mList.includes(currM)) {
           props.data.items[currM] = { surplus: 0, budget: formData.budget, balance: [] };
-          Database.put(props.database, Const.DB_RECORD, Utils.Objects.raw(props.data), props.currY).then(
-            () => {
-              dialog.value = !dialog.value;
-              emits("onCreated", formData.year);
-            }
-          );
+          Database.put(props.database, Const.DB_RECORD, Utils.Objects.raw(props.data), props.currY).then(() => {
+            dialog.value = !dialog.value;
+            emits("onCreated", formData.year);
+          });
         } else ElMessage.error("已有该记录");
       }
     },
@@ -89,12 +85,7 @@ const keys = Array.from({ length: 12 }, (_, i) => ({ value: `${i + 1}`, label: `
 <template>
   <div>
     <el-button plain round size="small" type="primary" @click="dialog = !dialog">创建记录</el-button>
-    <el-dialog
-      v-model="dialog"
-      append-to-body
-      title="创建记录"
-      width="90%"
-      @opened="formInst.resetFields()">
+    <el-dialog v-model="dialog" append-to-body title="创建记录" width="90%" @opened="formInst.resetFields()">
       <el-form
         ref="formInst"
         :model="formData"
@@ -109,16 +100,11 @@ const keys = Array.from({ length: 12 }, (_, i) => ({ value: `${i + 1}`, label: `
             placeholder="选择一个年份"
             style="width: 100%"
             type="year"
-            value-format="YYYY"
-          />
+            value-format="YYYY" />
         </el-form-item>
         <el-form-item label="月份" prop="month">
           <el-select v-model="formData.month" class="w-100%">
-            <el-option
-              v-for="item in keys"
-              :key="item.value"
-              :label="item.label + '月'"
-              :value="item.value" />
+            <el-option v-for="item in keys" :key="item.value" :label="item.label + '月'" :value="item.value" />
             <template #prefix>
               <div class="i-tabler-calendar"></div>
             </template>

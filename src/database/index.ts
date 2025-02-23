@@ -3,17 +3,17 @@ export namespace Database {
     const promise = new Promise<IDBDatabase>((resolve, reject) => {
       const req = indexedDB.open(Const.DB_TALLYPAD);
 
-      req.onsuccess = function(event) {
+      req.onsuccess = function (event) {
         // @ts-ignore
         const db = event.target.result;
         resolve(db);
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(new Error("创建数据库失败！"));
       };
 
-      req.onupgradeneeded = function(event) {
+      req.onupgradeneeded = function (event) {
         // @ts-ignore
         const db = event.target.result as IDBDatabase;
         const dbRecord = db.createObjectStore(Const.DB_RECORD, { keyPath: "id" });
@@ -39,11 +39,11 @@ export namespace Database {
       const store = transaction.objectStore(table);
       const req = store.add(data, key);
 
-      req.onsuccess = function() {
+      req.onsuccess = function () {
         resolve(db);
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(new Error("插入数据错误！"));
       };
     });
@@ -61,11 +61,11 @@ export namespace Database {
       const store = transaction.objectStore(table);
       const req = store.delete(key);
 
-      req.onsuccess = function() {
+      req.onsuccess = function () {
         resolve(db);
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(new Error("删除数据错误！"));
       };
     });
@@ -83,13 +83,13 @@ export namespace Database {
       const store = transaction.objectStore(table);
       const req = store.get(key);
 
-      req.onsuccess = function() {
-        store.put(data).onsuccess = function() {
+      req.onsuccess = function () {
+        store.put(data).onsuccess = function () {
           resolve(db);
         };
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(new Error("更新数据错误！"));
       };
     });
@@ -109,7 +109,7 @@ export namespace Database {
       if (key) {
         const req = store.get(key);
 
-        req.onsuccess = function() {
+        req.onsuccess = function () {
           const result = req.result;
           if (result) {
             resolve(result);
@@ -118,14 +118,14 @@ export namespace Database {
           }
         };
 
-        req.onerror = function() {
+        req.onerror = function () {
           reject(null);
         };
       } else {
         const req = store.openCursor();
         const arr: T[] = [];
 
-        req.onsuccess = function(event) {
+        req.onsuccess = function (event) {
           // @ts-ignore
           const cursor = event.target.result;
           if (cursor) {
@@ -137,7 +137,7 @@ export namespace Database {
           }
         };
 
-        req.onerror = function() {
+        req.onerror = function () {
           reject(null);
         };
       }
@@ -155,12 +155,12 @@ export namespace Database {
       const transaction = db.transaction([table], "readonly");
       const req = transaction.objectStore(table).getAllKeys();
 
-      req.onsuccess = function(event) {
+      req.onsuccess = function (event) {
         // @ts-ignore
         resolve(event.target.result);
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(null);
       };
     });
@@ -176,15 +176,15 @@ export namespace Database {
     const promise = new Promise((resolve, reject) => {
       const req = indexedDB.deleteDatabase(dbname);
 
-      req.onsuccess = function() {
+      req.onsuccess = function () {
         resolve(null);
       };
 
-      req.onerror = function() {
+      req.onerror = function () {
         reject(null);
       };
 
-      req.onblocked = function() {
+      req.onblocked = function () {
         reject(null);
       };
     });
@@ -202,10 +202,10 @@ export namespace Database {
       const store = transaction.objectStore(table);
       const req = store.clear();
 
-      req.onsuccess = function() {
+      req.onsuccess = function () {
         resolve("");
       };
-      req.onerror = function() {
+      req.onerror = function () {
         reject("");
       };
     });
@@ -217,11 +217,11 @@ export namespace Database {
 
     const req = store.add(data);
 
-    req.onsuccess = function() {
+    req.onsuccess = function () {
       console.log("Data added: ", data);
     };
 
-    req.onerror = function() {
+    req.onerror = function () {
       console.error("Error adding data: ");
     };
   }

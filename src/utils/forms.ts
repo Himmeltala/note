@@ -1,10 +1,6 @@
 import type { FormInstance } from "element-plus";
 
-export const formValidator = async (
-  formEl: FormInstance | undefined,
-  success?: Function,
-  error?: Function
-) => {
+export const formValidator = async (formEl: FormInstance | undefined, success?: Function, error?: Function) => {
   if (!formEl) return;
   await formEl.validate(valid => {
     if (valid) {
@@ -30,5 +26,10 @@ export const validateMoney = (rule: any, value: any, callback: any) => {
 };
 
 export function disabledDate(time: Date, Y: string, M: string) {
-  return !(time.getFullYear() === Number(Y) && time.getMonth() === Number(M) - 1 && time.getDate() >= 1 && time.getDate() <= 31);
+  return !(
+    time.getFullYear() === Number(Y) &&
+    time.getMonth() === Number(M) - 1 &&
+    time.getDate() >= 1 &&
+    time.getDate() <= 31
+  );
 }

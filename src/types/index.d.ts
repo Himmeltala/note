@@ -31,4 +31,4 @@ declare type IConfig = {
   budget: number;
   isChart: boolean;
   itemAsc: boolean;
-}
+};

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { PropType } from "vue";
+import { disabledDate } from "@/utils/forms";
 import { ChatDotRound, Coin } from "@element-plus/icons-vue";
 import type { FormInstance, FormRules } from "element-plus";
-import { disabledDate } from "@/utils/forms";
+import { PropType } from "vue";
 
 const props = defineProps({
   database: {
@@ -24,7 +24,9 @@ const props = defineProps({
 
 const dialog = ref(false);
 const formData = ref<IBalance>({
-  id: "", cost: 0, text: "",
+  id: "",
+  cost: 0,
+  text: "",
   datetime: Utils.Dates.nowDate("YY-MM-DD", new Date(Number(props.currY), Number(props.currM) - 1))
 });
 const formInst = ref<FormInstance>();
@@ -34,9 +36,7 @@ const formRule = ref<FormRules>({
     { required: true, message: "请输入备注", trigger: "change" },
     { min: 1, max: 50, message: "长度在1~50个字符之间", trigger: "change" }
   ],
-  datetime: [
-    { required: true, message: "请输入日期", trigger: "change" }
-  ]
+  datetime: [{ required: true, message: "请输入日期", trigger: "change" }]
 });
 const { items } = await Database.get<{ items: IComment[] }>(props.database, Const.DB_COMMENTS, Const.DB_KEY_COMMENTS);
 const comments = ref<IComment[]>(items);
@@ -82,12 +82,7 @@ function afterOpenedDialog() {
 <template>
   <div>
     <el-button plain round size="small" type="success" @click="dialog = !dialog">添加计划</el-button>
-    <el-dialog
-      v-model="dialog"
-      append-to-body
-      title="添加一项计划"
-      width="90%"
-      @opened="afterOpenedDialog">
+    <el-dialog v-model="dialog" append-to-body title="添加一项计划" width="90%" @opened="afterOpenedDialog">
       <el-form
         ref="formInst"
         :model="formData"
@@ -106,20 +101,15 @@ function afterOpenedDialog() {
             @select="onAutocompleteSelected" />
         </el-form-item>
         <el-form-item label="金额" prop="cost">
-          <el-input
-            v-model.number="formData.cost"
-            :prefix-icon="Coin"
-            placeholder="请输入金额"
-            type="number" />
+          <el-input v-model.number="formData.cost" :prefix-icon="Coin" placeholder="请输入金额" type="number" />
         </el-form-item>
         <el-form-item label="日期" prop="datetime">
           <el-date-picker
             v-model="formData.datetime"
-            :disabled-date="(time:Date) => disabledDate(time, currY, currM)"
+            :disabled-date="(time: Date) => disabledDate(time, currY, currM)"
             placeholder="请输入日期"
             style="width: 100%"
-            type="date"
-          />
+            type="date" />
         </el-form-item>
         <el-form-item class="mt-10">
           <div class="f-c-c w-100%">
@@ -144,5 +134,4 @@ function afterOpenedDialog() {
 .el-date-picker__header {
   display: none;
 }
-
 </style>
