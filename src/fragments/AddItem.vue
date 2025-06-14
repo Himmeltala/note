@@ -31,7 +31,7 @@ const formData = ref<IBalance>({
 });
 const formInst = ref<FormInstance>();
 const formRule = ref<FormRules>({
-  cost: [{ validator: Utils.Forms.validateMoney, trigger: "change" }],
+  cost: [{ required: true, message: "请输入金额", trigger: "change" }],
   text: [
     { required: true, message: "请输入备注", trigger: "change" },
     { min: 1, max: 50, message: "长度在1~50个字符之间", trigger: "change" }
